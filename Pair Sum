@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+
+vector<vector<int>> pairSum(vector<int> &arr, int s){
+   // Write your code here.
+   vector<vector<int>> ans;
+   unordered_map<int, int> mpp;
+   for (int i = 0; i < arr.size(); i++)
+   {
+      if (mpp.find(s - arr[i]) != mpp.end())
+      {
+         int freq = mpp[s - arr[i]];
+         while (freq--)
+         {
+            ans.push_back({min(s-arr[i], arr[i]), 
+                     max(s-arr[i], arr[i])});
+         }
+      }
+      mpp[arr[i]]++;
+   }
+   sort(ans.begin(), ans.end());
+   return ans;
+}
