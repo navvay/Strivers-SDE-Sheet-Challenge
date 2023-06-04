@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+
+void formRow(vector<long long int> &row, int i)
+{
+  long long int p = 1;
+  row[0] = 1;
+  for (int r = 1; r <= i; r++)
+  {
+    p = p * (i - r + 1) / r;
+    row[r] = p;
+  }
+}
+vector<vector<long long int>> printPascal(int n) 
+{
+    vector<vector<long long int>> ans;
+    vector<long long int> row;
+    int i, j;
+    for (int i = 0; i < n; i++)
+    {
+      row.resize(i+1);
+      formRow(row, i);
+      ans.push_back(row);
+      row.clear();
+    }
+    return ans;
+  // Write your code here.
+}
