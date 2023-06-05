@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 
+class Queue {
+private:
+    vector<int> arr;
+    int f, rear;
+public:
+    Queue() {
+        f = 0;
+        rear = 0;
+        // Implement the Constructor
+    }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty() {
+        return f == rear;
+        // Implement the isEmpty() function
+    }
+
+    void enqueue(int data) {
+        arr.push_back(data);
+        rear++;
+        // Implement the enqueue() function
+    }
+
+    int dequeue() {
+        if (f == rear) return -1;
+        return arr[f++];
+        // Implement the dequeue() function
+    }
+
+    int front() {
+        if (f == rear) return -1;
+        return arr[f];
+        // Implement the front() function
+    }
+};
