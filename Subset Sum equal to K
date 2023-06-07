@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+bool subsetSumToK(int n, int k, vector<int> &arr) {
+    vector<int> prev(k + 1, 0), cur(k + 1, 0);
+    if (arr[0] <= k) 
+    prev[arr[0]] = 1;
+    prev[0] = 1;
+    for (int i = 1; i < n; i++)
+    {
+        cur[0] = 1;
+        for (int sum = 1; sum <= k; sum++)
+        {
+            int pick = 0, skip = 0;
+            skip = prev[sum];
+            if (arr[i] <= sum) pick = prev[sum - arr[i]];
+            cur[sum] = pick | skip;
+        }
+        if (cur[k] == 1) return 1;
+        prev = cur;
+    }
+    return prev[k];
+    // Write your code here.
+}
