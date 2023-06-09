@@ -1,0 +1,19 @@
+int maxProfit(vector<int> &values, vector<int> &weights, int n, int w)
+{
+	vector<int> prev(w+1, 0), cur(w+1, 0);
+	for (int wt = weights[0]; wt <= w; wt++) prev[wt] = values[0];
+
+	for (int ind = 1; ind < n; ind++)
+	{
+		for (int wt = 0; wt <= w; wt++)
+		{
+			int pick = 0, skip = 0;
+			if (wt >= weights[ind]) pick = values[ind] + prev[wt-weights[ind]];
+			skip = prev[wt];
+			cur[wt] = max(skip, pick);
+		}
+		prev = cur;
+	}
+	return prev[w];
+	// Write your code here
+}
