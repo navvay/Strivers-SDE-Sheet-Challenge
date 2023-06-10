@@ -1,0 +1,72 @@
+#include <bits/stdc++.h> 
+
+void dfs(vector<int> adj[], int node, vector<int> &vis, stack<int> &s)
+{
+    vis[node] = 1;
+    for (auto it: adj[node])
+    {
+        if (!vis[it]) dfs(adj, it, vis, s);
+    }
+    s.push(node);
+}
+vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
+    // Write your code here
+    vector<int> adj[v];
+    for (auto it: edges)
+    {
+        adj[it[0]].push_back(it[1]);
+    }
+    //dfs traversal method
+    /*stack<int> s;
+    vector<int> vis(v, 0);
+    for (int i = 0; i < v; i++) {
+      if (!vis[i])
+        dfs(adj, i, vis, s);
+    }
+
+    vector<int> ans;
+    while (!s.empty())
+    {
+        ans.push_back(s.top());
+        s.pop();
+    }
+    return ans;*/
+
+    //bfs traversal method
+    vector<int> indeg(v, 0);
+
+    for (int i = 0; i < v; i++)
+    {
+        for (auto it: adj[i])
+        {
+            indeg[it]++;
+        }
+    }
+
+    queue<int> q;
+
+    for (int i = 0; i < v; i++)
+    {
+        if (indeg[i] == 0)
+        q.push(i);
+    }
+
+    vector<int> ans;
+    while (!q.empty())
+    {
+        int node = q.front();
+        q.pop();
+        ans.push_back(node);
+
+        for (auto it: adj[node])
+        {
+            if (indeg[it] < 0) continue;
+            indeg[it]--;
+            if (indeg[it] == 0)
+            {
+                q.push(it);
+            }
+        }
+    }
+    return ans;
+}
