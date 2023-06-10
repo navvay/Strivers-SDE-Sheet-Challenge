@@ -1,0 +1,73 @@
+#include <bits/stdc++.h> 
+
+struct Node{
+    Node *key[26];
+    int pre = 0;
+    int end = 0;
+};
+class Trie{
+    private:
+        Node* root;
+    public:
+
+    Trie(){
+        root = new Node();
+        // Write your code here.
+    }
+
+    void insert(string &word){
+        Node* node = root;
+
+        for (int i = 0; i < word.size(); i++)
+        {
+            if (!node->key[word[i] - 'a'])
+            {
+                node->key[word[i] - 'a'] = new Node();
+            }
+            node = node->key[word[i] - 'a'];
+            node->pre++;
+        }
+        node->end++;
+        // Write your code here.
+    }
+
+    int countWordsEqualTo(string &word){
+        Node* node = root;
+
+        for (int i = 0; i < word.size(); i++)
+        {
+            if (!node->key[word[i] - 'a'])
+            return 0;
+            node = node->key[word[i] - 'a'];
+        }
+        return node->end;
+        // Write your code here.
+    }
+
+    int countWordsStartingWith(string &word){
+        Node* node = root;
+
+        for (int i = 0; i < word.size(); i++)
+        {
+            if (!node->key[word[i] - 'a'])
+            return 0;
+            node = node->key[word[i] - 'a'];
+        }
+        return node->pre;
+        // Write your code here.
+    }
+
+    void erase(string &word){
+        Node* node = root;
+
+        for (int i = 0; i < word.size(); i++)
+        {
+            if (!node->key[word[i] - 'a'])
+            return;
+            node = node->key[word[i] - 'a'];
+            node->pre--;
+        }
+        node->end--;
+        // Write your code here.
+    }
+};
