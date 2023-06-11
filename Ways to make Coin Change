@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+long countWaysToMakeChange(int *denominations, int n, int value)
+{
+    vector<long> prev(value+1, 0), cur(value+1, 0);
+
+    for (int sum = denominations[0]; sum <= value; sum += denominations[0])
+    {
+        prev[sum] = 1;
+    }
+
+    prev[0] = 1;
+
+    for (int ind = 1; ind < n; ind++)
+    {
+        cur[0] = 1;
+        for (int sum = 1; sum <= value; sum++)
+        {
+            long skip = 0, pick = 0;
+
+            skip = prev[sum];
+            if (denominations[ind] <= sum) pick = cur[sum - denominations[ind]];
+
+            cur[sum] = skip + pick;
+        }
+        prev = cur;
+    }
+    return prev[value];
+    //Write your code here
+}
