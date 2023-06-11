@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+bool bfs(vector<vector<int>> &edges, int node, vector<int> &vis, int v)
+{
+	vis[node] = 1;
+
+	queue<int> q;
+	q.push(node);
+
+	while (!q.empty())
+	{
+		int cur = q.front();
+		q.pop();
+
+		for (int i = 0; i < v; i++)
+		{
+			if (edges[cur][i] == 1)
+			{
+				if (vis[i] == -1)
+				{
+					vis[i] = 1 - vis[cur];
+					q.push(i);
+				}
+				else if (vis[i] == vis[cur]) return false;
+			}
+		}
+	}
+	return true;
+}
+bool isGraphBirpatite(vector<vector<int>> &edges) {
+	int v = edges.size();
+	vector<int> vis(v, -1);
+
+	queue<int> q;
+	
+	for (int i = 0; i < v; i++)
+	{
+		if (vis[i] == -1)
+		{
+			if (!bfs(edges, i, vis, v)) return false;
+		}
+	}
+	return true;
+	// Write your code here.
+}
