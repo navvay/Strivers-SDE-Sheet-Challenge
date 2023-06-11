@@ -1,0 +1,23 @@
+bool isValidParenthesis(string expression)
+{
+    stack<char> st;
+
+    for (auto it: expression)
+    {
+      if (st.empty()) {
+        if (it == ']' || it == '}' || it == ')') return false;
+        else st.push(it);
+      }
+      else {
+            char ch = st.top();
+            if ((ch == '(' && it == ')') || (ch == '{' && it == '}') || 
+                        (ch == '[' && it == ']'))
+            st.pop();
+            else if (it == ']' || it == '}' || it == ')') return false;
+            else
+            st.push(it);
+      }
+    }
+    return st.empty();
+    // Write your code here.
+}
