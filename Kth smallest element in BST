@@ -1,0 +1,42 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+void inorder(TreeNode<int> *node, int k, int &cnt, int &ans, bool &flag)
+{
+    if (!node) return;
+    if (flag) return;
+    inorder(node->left, k, cnt, ans, flag);
+    cnt++;
+    if (cnt == k){
+        flag = true;
+        ans = node->data;
+        return;
+    }
+    if (flag) return;
+    inorder(node->right, k, cnt, ans, flag);
+}
+int kthSmallest(TreeNode<int> *root, int k)
+{
+    bool flag = 0;
+    int cnt = 0, ans = -1;
+    inorder(root, k, cnt, ans, flag);
+    return ans;
+	//	Write the code here.
+}
