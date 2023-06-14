@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+bool wordBreak(vector < string > & arr, int n, string & target) {
+    // Write your code here.
+    set<string> st(arr.begin(), arr.end());
+    int sz = target.size();
+    vector<int> dp(sz+1, 0);
+    dp[sz] = 1;
+    for (int ind = sz-1; ind >= 0; ind--){
+        string temp = "";
+        bool ans = false;
+        for (int j = ind; j < target.size(); j++)
+        {
+            temp += target[j];
+            if (st.find(temp) != st.end()) ans = dp[j + 1];
+            if (ans) {
+              dp[ind] = true;
+              break;
+            }
+        }
+        if (!dp[ind])
+        dp[ind] = false;
+    }
+    return dp[0];
+}
