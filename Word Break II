@@ -1,0 +1,32 @@
+#include <bits/stdc++.h> 
+void f(vector<string> &ans, set<string> &st, string &s, 
+            int ind, string &res, string &wrd)
+{
+    if (ind == s.size())
+    {
+        if (wrd == "") {
+            ans.push_back(res);
+            return;
+        }
+        else return;
+    }
+    
+    string newWrd = wrd + s[ind];
+
+    if (st.find(newWrd) != st.end())
+    {
+        string ns = res + newWrd + " ";
+        string temp = "";
+        f(ans, st, s, ind+1, ns, temp);
+    }
+    f(ans, st, s, ind+1, res, newWrd);
+}
+vector<string> wordBreak(string &s, vector<string> &dictionary)
+{
+    vector<string> ans;
+    set<string> st(dictionary.begin(), dictionary.end());
+    string res = "", wrd = "";
+    f(ans, st, s, 0, res, wrd);
+    return ans;
+    // Write your code here
+}
