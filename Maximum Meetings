@@ -1,0 +1,27 @@
+#include <bits/stdc++.h> 
+static bool comp(pair<pair<int, int>, int> &a, pair<pair<int, int>, int> &b)
+{
+    if (b.first.second != a.first.second) return a.first.second < b.first.second;
+    return a.second < b.second;
+}
+vector<int> maximumMeetings(vector<int> &start, vector<int> &end) {
+    // Write your code here.
+    int n = start.size();
+    vector<pair<pair<int, int>, int>> task;
+    vector<int> ans;
+    for (int i = 0; i < n; i++)
+    {
+        task.push_back({{start[i], end[i]}, i+1});
+    }
+    sort(task.begin(), task.end(), comp);
+    int last = -1;
+    for (int i = 0; i < n; i++)
+    {
+        if (task[i].first.first > last)
+        {
+            last = task[i].first.second;
+            ans.push_back(task[i].second);
+        }
+    }
+    return ans;
+}
