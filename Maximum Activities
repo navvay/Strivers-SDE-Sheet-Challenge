@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+static bool comp(pair<int, int> &a, pair<int, int> &b)
+{
+    if (b.second != a.second) return a.second < b.second;
+    return a.first < b.first;
+}
+int maximumActivities(vector<int> &start, vector<int> &finish) {
+    // Write your code here.
+    int n = start.size();
+    vector<pair<int, int>> task;
+    for (int i = 0; i < n; i++)
+    {
+        task.push_back({start[i], finish[i]});
+    }
+    sort(task.begin(), task.end(), comp);
+    int last = -1, cnt = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (task[i].first >= last)
+        {
+            last = task[i].second;
+            cnt++;
+        }
+    }
+    return cnt;
+}
