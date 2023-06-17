@@ -1,0 +1,30 @@
+#include <bits/stdc++.h> 
+
+static bool comp (pair<int, int> &a, pair<int, int> &b)
+{
+    return (double)a.second / (double)a.first > (double)b.second / (double)b.first;
+}
+double maximumValue (vector<pair<int, int>>& items, int n, int w)
+{
+    sort(items.begin(), items.end(), comp);
+
+    double val = 0;
+
+    for (auto it: items)
+    {
+        if (w >= it.first)
+        {
+            val += it.second;
+            w -= it.first;
+        }
+        else
+        {
+            val = val + (double)it.second * (double)w / (double)it.first;
+            w = 0;
+        }
+        if (w == 0) break;
+    }
+    return val;
+    // Write your code here.
+    // ITEMS contains {weight, value} pairs.
+}
