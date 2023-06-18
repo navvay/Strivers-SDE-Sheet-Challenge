@@ -1,0 +1,17 @@
+#include <bits/stdc++.h> 
+bool areAnagram(string &str1, string &str2){
+    // Write your code here.
+    if (str1.size() != str2.size()) return false;
+    int s = str1.size();
+    vector<int> freq(26, 0);
+    for (int i = 0; i < s; i++)
+    {
+        freq[str1[i] - 'a']++;
+        freq[str2[i] - 'a']--;
+    }
+    for (auto it: freq)
+    {
+        if (it != 0) return false;
+    }
+    return true;
+}
