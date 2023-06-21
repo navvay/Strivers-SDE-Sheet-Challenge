@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+void f(vector<vector<int>> &ans, vector<int> &ele, int ind, int n, vector<int> &v)
+{
+    if (ind == n)
+    {
+        ans.push_back(ele);
+        return;
+    }
+
+    ele.push_back(v[ind]);
+    f(ans, ele, ind+1, n, v);
+    ele.pop_back();
+    f(ans, ele, ind+1, n, v);
+}
+vector<vector<int>> pwset(vector<int>v)
+{
+    vector<vector<int>> ans;
+    vector<int> ele;
+    f(ans, ele, 0, v.size(), v);
+    return ans;
+    //Write your code here
+}
