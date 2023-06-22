@@ -1,0 +1,48 @@
+#include <bits/stdc++.h> 
+/*************************************************************
+
+    Following is the Binary Tree node structure
+
+    template <typename T>
+
+    class TreeNode{
+    public:
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this->data = data;
+            left = NULL;
+            right = NULL;
+        }
+        ~TreeNode() {
+            if (left){
+                delete left;
+            }
+            if (right){
+                delete right;
+            }
+        }
+    };
+
+*************************************************************/
+
+TreeNode<int>* node(vector<int> &preOrder, int ul, int &ind)
+{
+    if (ind == preOrder.size()) return NULL;
+    if (preOrder[ind] >= ul)
+    {
+        return NULL;
+    }
+    TreeNode<int> *root = new TreeNode<int>(preOrder[ind]);
+    ind++;
+    root->left = node(preOrder, root->data, ind);
+    root->right = node(preOrder, ul, ind);
+    return root;
+}
+TreeNode<int>* preOrderTree(vector<int> &preOrder){
+    int ind = 0;
+    return node(preOrder, 1e9+1, ind);
+    // Write your code here.
+}
