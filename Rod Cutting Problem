@@ -1,0 +1,26 @@
+int cutRod(vector<int> &price, int n)
+{
+	vector<int> prev(n + 1, 0), cur(n + 1, 0);
+
+	for (int len = 0; len <= n; len++)
+	prev[len] = len * price[0];
+
+	for (int ind = 1; ind < n; ind++)
+	{
+		cur[0] = 0;
+		for (int len = 1; len <= n; len++)
+		{
+			int cut = 0, skip = 0;
+
+			if (ind + 1 <= len)
+			cut = price[ind] + cur[len - ind - 1];
+
+			skip = prev[len];
+
+			cur[len] = max(cut, skip);
+		}
+		prev = cur;
+	}
+	return prev[n];
+	// Write your code here.
+}
