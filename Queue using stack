@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+class Queue {
+    // Define the data members(if any) here.
+    
+    public:
+    stack<int> st1, st2;
+    int size;
+    Queue() {
+        size = 0;
+        // Initialize your data structure here.
+    }
+
+    void enQueue(int val) {
+        st1.push(val);
+        size++;
+        // Implement the enqueue() function.
+    }
+
+    int deQueue() {
+        if (!st2.empty())
+        {
+            size--;
+            int ele = st2.top();
+            st2.pop();
+            return ele;
+        }
+
+        if (!st1.empty())
+        {
+            size--;
+            while (!st1.empty())
+            {
+                int ele = st1.top();
+                st1.pop();
+                st2.push(ele);
+            }
+            int ele = st2.top();
+            st2.pop();
+            return ele;
+        }
+        return -1;
+        // Implement the dequeue() function.
+    }
+
+    int peek() {
+        if (!st2.empty())
+        {
+            int ele = st2.top();
+            return ele;
+        }
+
+        if (!st1.empty())
+        {
+            while (!st1.empty())
+            {
+                int ele = st1.top();
+                st1.pop();
+                st2.push(ele);
+            }
+            int ele = st2.top();
+            return ele;
+        }
+        return -1;
+        // Implement the peek() function here.
+    }
+
+    bool isEmpty() {
+        return !(size);
+        // Implement the isEmpty() function here.
+    }
+};
