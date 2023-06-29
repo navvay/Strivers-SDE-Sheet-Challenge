@@ -1,0 +1,27 @@
+#include <bits/stdc++.h> 
+int chessTournament(vector<int> positions , int n ,  int c){
+	// Write your code here
+	sort(positions.begin(), positions.end());
+
+	int low = 1, high = positions[n-1] - positions[0], mid;
+
+	while (low <= high)
+	{
+		mid = (low + high) / 2;
+
+		int p = 1, last = positions[0];
+
+		for (int i = 1; i < n; i++)
+		{
+			if (positions[i] - last >= mid)
+			{
+				p++;
+				last = positions[i];
+			}
+		}
+
+		if (p >= c) low = mid + 1;
+		else high = mid - 1;
+	}
+	return high;
+}
