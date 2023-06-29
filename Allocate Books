@@ -1,0 +1,35 @@
+#include <bits/stdc++.h> 
+long long ayushGivesNinjatest(int n, int m, vector<int> time) 
+{	
+	long long maxi = 0, sum = 0;
+
+	for (auto it: time)
+	{
+		maxi = maxi > it ? maxi : it;
+		sum += it;
+	}
+
+	long long low = maxi, high = sum, mid;
+	while (low <= high)
+	{
+		mid = (low + high) / 2;
+
+		long long t = 0, days = 1;
+		for (auto it: time)
+		{
+			if (t + it <= mid)
+			t += it;
+			else
+			{
+				days += 1;
+				t = it;
+			}
+		}
+
+		if (days > n)
+		low = mid + 1;
+		else high = mid - 1;
+	}
+	return low;
+	// Write your code here.
+}
