@@ -1,0 +1,22 @@
+#include <bits/stdc++.h> 
+vector<int> countDistinctElements(vector<int> &arr, int k) 
+{
+    int n = arr.size();
+    unordered_map<int, int> mpp;
+    for (int i = 0; i < k; i++)
+    {
+        mpp[arr[i]]++;
+    }
+    vector<int> ans;
+    for (int i = 0; i < n - k + 1; i++)
+    {
+        ans.push_back(mpp.size());
+        
+        if (mpp[arr[i]] == 1) mpp.erase(arr[i]);
+        else mpp[arr[i]]--;
+        mpp[arr[i + k]]++;
+    }
+    return ans;
+    // Write your code here
+	
+}
