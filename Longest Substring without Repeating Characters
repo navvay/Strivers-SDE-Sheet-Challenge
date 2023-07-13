@@ -1,0 +1,18 @@
+#include <bits/stdc++.h> 
+int uniqueSubstrings(string input)
+{
+    int l = 0, r = 0, ans = 0, n = input.size();
+    vector<int> mpp(256, -1);
+
+    while (r < n)
+    {
+        char ch = input[r];
+        if (mpp[ch] != -1) l = max(mpp[ch] + 1, l);
+        mpp[ch] = r;
+        ans = max(ans, r - l + 1);
+        r++;
+    }
+
+    return ans;
+    //Write your code here
+}
