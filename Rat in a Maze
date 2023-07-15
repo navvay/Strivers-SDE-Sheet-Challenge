@@ -1,0 +1,47 @@
+#include <bits/stdc++.h> 
+void makeAnswer(vector<vector<int>> &ans, vector<vector<int>> &path, int n)
+{
+  vector<int> row;
+  for (int i = 0; i < n; i++)
+  {
+    for (int j = 0; j < n; j++)
+    {
+      row.push_back(path[i][j]);
+    }
+  }  
+  ans.push_back(row);
+}
+void f(vector<vector<int>> &maze, int i, int j, int n, vector<vector<int>> &ans,
+        vector<vector<int>> &path)
+{
+  if (i == n - 1 && j == n - 1)
+  {
+    makeAnswer(ans, path, n);
+    return;
+  }
+  
+  if (maze[i][j] != 1) return;
+  int di[] = {0, 0, -1, 1};
+  int dj[] = {1, -1, 0, 0};
+
+  for (int k = 0; k < 4; k++)
+  {
+    int ni = i + di[k];
+    int nj = j + dj[k];
+    if (ni >= 0 && nj >= 0 && ni < n && nj < n && maze[ni][nj] == 1 && path[ni][nj] != 1)
+    {
+      path[ni][nj] = 1;
+      f(maze, ni, nj, n, ans, path);
+      path[ni][nj] = 0;
+    }
+  }
+}
+vector<vector<int> > ratInAMaze(vector<vector<int> > &maze, int n){
+  if (maze[0][0] == 0 || maze[n-1][n-1] == 0) return {};
+  vector<vector<int>> ans;
+  vector<vector<int>> path(n, vector<int> (n, 0));
+  path[0][0] = 1;
+  f(maze, 0, 0, n, ans, path);
+  return ans;
+  // Write your code here.
+}
