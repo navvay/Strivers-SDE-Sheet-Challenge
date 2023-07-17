@@ -1,0 +1,31 @@
+int findele(vector<int> &row, int ele, int m)
+{
+    int low = 0, high = m - 1;
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        if (row[mid] <= ele) low = mid + 1;
+        else high = mid - 1;
+    }
+    return low;
+}
+int getMedian(vector<vector<int>> &matrix)
+{
+    int low = 1, high = 1e5;
+    int n = matrix.size(), m = matrix[0].size();
+
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+        int cnt = 0;
+        for (int i = 0; i < n; i++)
+        {
+            cnt += findele(matrix[i], mid, m);
+        }
+
+        if (cnt <= (n * m) / 2) low = mid + 1;
+        else high = mid - 1;
+    }
+    return low;
+    // Write your code here.
+}
