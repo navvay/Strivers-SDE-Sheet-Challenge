@@ -1,0 +1,73 @@
+#include <bits/stdc++.h> 
+class DisjointSet{
+
+	private: vector<int> size, par;
+	int n;
+
+	public:
+	DisjointSet(int nn)
+	{
+		n = nn;
+		size.resize(nn+1);
+		par.resize(nn+1);
+		for (int i = 0; i <= nn; i++)
+		{
+			size[i] = 1;
+			par[i] = i;
+		}
+	}
+	int findPar(int v)
+	{
+		if (par[v] == v) return v;
+		return par[v] = findPar(par[v]);
+	}
+	void join(int u, int v)
+	{
+		int pu = findPar(u);
+		int pv = findPar(v);
+
+		if (pu == pv) return;
+
+		if (size[pu] > size[pv])
+		{
+			size[pu] += size[pv];
+			par[pv] = pu;
+		}
+		else
+		{
+			size[pv] += size[pu];
+			par[pu] = pv;
+		}
+	}
+	bool sameComp(int u, int v)
+	{
+		return findPar(u) == findPar(v);
+	}
+};
+int kruskalMST(int n, int m, vector<vector<int>> &graph) {
+	// Write your code here.
+	int wt = 0;
+	vector<pair<int, pair<int, int>>> edges;
+
+	for (auto it: graph)
+	{
+		edges.push_back({it[2], {it[0], it[1]}});
+	}
+
+	sort(edges.begin(), edges.end());
+
+	DisjointSet ds(n);
+	for (auto it: edges)
+	{
+		int w = it.first;
+		int u = it.second.first;
+		int v = it.second.second;
+
+		if (ds.sameComp(u, v)) continue;
+
+		wt += w;
+
+		ds.join(u, v); 
+	}
+	return wt;
+}
