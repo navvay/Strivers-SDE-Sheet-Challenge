@@ -1,0 +1,51 @@
+void makeAnswer(vector<vector<int>> &ans, vector<vector<int>> &board, int n)
+{
+    vector<int> row;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            row.push_back(board[i][j]);
+        }
+    }
+    ans.push_back(row);
+}
+void f(vector<vector<int>> &board, vector<vector<int>> &ans, int row, int n,
+        vector<int> &colCheck, vector<int> &leftDiag, vector<int> &rightDiag)
+{
+    if (row == n){
+        makeAnswer(ans, board, n);
+        return;
+    }
+
+    for (int col = 0; col < n; col++)
+    {
+        if (colCheck[col] == 1 || leftDiag[col - row + n - 1] == 1 || 
+            rightDiag[col + row] == 1) continue;
+        board[row][col] = 1;
+        colCheck[col] = 1;
+        leftDiag[col - row + n - 1] = 1;
+        rightDiag[col + row] = 1;
+        f(board, ans, row + 1, n, colCheck, leftDiag, rightDiag);
+        board[row][col] = 0;
+        colCheck[col] = 0;
+        leftDiag[col - row + n - 1] = 0;
+        rightDiag[col + row] = 0;
+    }
+}
+
+vector<vector<int>> solveNQueens(int n) {
+    if (n == 1)
+      return {{1}};
+
+    if (n < 4) return {};
+
+    vector<vector<int>> board(n, vector<int> (n, 0)), ans;
+
+    vector<int> colCheck(n, 0), leftDiag(2 * n - 1, 0), rightDiag(2 * n - 1, 0);
+
+    f(board, ans, 0, n, colCheck, leftDiag, rightDiag);
+
+    return ans;
+    // Write your code here.
+}
