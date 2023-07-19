@@ -1,0 +1,26 @@
+#include <bits/stdc++.h> 
+struct Node{
+    Node *keys[26];
+};
+
+int distinctSubstring(string &word) {
+
+    int cnt = 0;
+
+    Node* root = new Node();
+    for (int i = 0; i < word.size(); i++)
+    {
+        Node* node = root;
+        for (int j = i; j < word.size(); j++)
+        {
+            if (!node->keys[word[j] - 'a']){
+                cnt++;
+                node->keys[word[j] - 'a'] = new Node();
+            }
+            node = node->keys[word[j] - 'a'];
+        }
+    }
+
+    return cnt;
+    //  Write your code here.
+}
