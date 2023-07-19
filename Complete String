@@ -1,0 +1,63 @@
+#include <bits/stdc++.h> 
+struct Node{
+    Node* keys[26];
+    bool flag = false;
+};
+
+class Trie{
+    private: Node* root;
+    public:
+    Trie(){
+        root = new Node();
+    }
+
+    void insert(string &wrd)
+    {
+        Node* node = root;
+
+        for (int i = 0; i < wrd.size(); i++)
+        {
+            char ch = wrd[i];
+            if (!node->keys[ch - 'a']){
+                node->keys[ch - 'a'] = new Node();
+            }
+            node = node->keys[ch - 'a'];
+        }
+        node->flag = true;
+    }
+
+    bool check(string &wrd)
+    {
+        Node* node = root;
+
+        for (int i = 0; i < wrd.size(); i++)
+        {
+            char ch = wrd[i];
+            if (!node->keys[ch - 'a']) return false;
+            node = node->keys[ch - 'a'];
+            if (!node->flag) return false;
+        }
+        return true;
+    }
+};
+string completeString(int n, vector<string> &a){
+    // Write your code here.
+    Trie obj;
+    for (auto it: a) obj.insert(it);
+
+    string ans = "";
+
+    for (auto it: a)
+    {
+        if (obj.check(it))
+        {
+            if (ans.size() < it.size()) ans = it;
+            else if (ans.size() == it.size()){
+                ans = it < ans ? it : ans;
+            }
+        }
+    }
+
+    if (ans == "") return "None";
+    return ans;
+}
