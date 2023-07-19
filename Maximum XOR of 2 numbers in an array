@@ -1,0 +1,64 @@
+#include <bits/stdc++.h> 
+
+struct Node{
+    Node *keys[2];
+};
+
+class Trie{
+    private: Node* root;
+
+    public: 
+    Trie()
+    {
+        root = new Node();
+    }
+
+    void insert(int num)
+    {
+        Node *node = root;
+        for (int i = 31; i >= 0; i--)
+        {
+            int bit = 1 & (num >> i);
+
+            if (!node->keys[bit])
+            {
+                node->keys[bit] = new Node();
+            }
+            node = node->keys[bit];
+        }
+    }
+
+    int findXOR(int num)
+    {
+        int ans = 0;
+        Node* node = root;
+        for (int i = 31; i >= 0; i--)
+        {
+            int bit = 1 & (num >> i);
+
+            if (node->keys[!bit])
+            {
+                ans = ans | (1 << i);
+                node = node->keys[!bit];
+            }
+            else
+            {
+                node = node->keys[bit];
+            }
+        }
+        return ans;
+    }
+};
+int maximumXor(vector<int> A)
+{
+    Trie obj;
+
+    for (auto it: A) obj.insert(it);
+
+    int ans = 0;
+
+    for (auto it: A) ans = max(ans, obj.findXOR(it));
+
+    return ans;
+    // Write your code here.   
+}
