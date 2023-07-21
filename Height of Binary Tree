@@ -1,0 +1,38 @@
+#include <bits/stdc++.h> 
+int heightOfTheTree(vector<int>& inorder, vector<int>& levelOrder, int N){
+	unordered_map<int, int> mpp;
+
+	for (int i = 0; i < N; i++){
+		mpp[inorder[i]] = i;
+	}
+
+	queue<pair<int, pair<int, int>>> q; //h, li, ri
+	int ans = 0;
+
+	q.push({0, {0, N - 1}});
+
+	int ind = 0;
+
+	while (!q.empty() && ind < N)
+	{
+		auto it = q.front();
+		q.pop();
+
+		int h = it.first, li = it.second.first, ri = it.second.second;
+
+		ans = max(ans, h);
+
+		if (li > ri) continue;
+
+		int r_ind = mpp[levelOrder[ind]];
+
+		if (r_ind >= li && r_ind <= ri){
+			q.push({h + 1, {li, r_ind - 1}});
+			q.push({h + 1, {r_ind + 1, ri}});
+			ind++;
+		}
+	}
+
+	return ans;
+	// Write your code here.
+}
