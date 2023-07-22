@@ -1,0 +1,16 @@
+string longestCommonPrefix(vector<string> &arr, int n)
+{
+    if (n == 1) return arr[0];
+    string ans = lcp(arr[0], arr[1]);
+
+    if (ans == "") return "";
+
+    for (int i = 2; i < n; i++)
+    {
+        ans = lcp(ans, arr[i]);
+        if (ans == "") return "";
+    }
+
+    return ans;
+    // Write your code here
+}
