@@ -1,0 +1,21 @@
+#include <bits/stdc++.h> 
+int maxIncreasingDumbbellsSum(vector<int> &rack, int n)
+{
+	vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
+
+	for (int cur = n - 1; cur >= 0; cur--)
+	{
+		for (int prev = cur - 1; prev >= -1; prev--)
+		{
+			int pick = 0, skip = 0;
+
+			if (prev == -1 || rack[cur] > rack[prev]) pick = rack[cur] + dp[cur + 1][cur + 1];
+
+			skip = dp[prev + 1][cur + 1];
+
+			dp[prev + 1][cur] = max(pick, skip);
+		}
+	}
+	return dp[0][0];
+	// Write your code here
+}
