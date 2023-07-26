@@ -1,0 +1,38 @@
+string longestPalinSubstring(string str)
+{
+    // Write your code here.
+    int start = 0, len = 1, i, l = str.size(), low, high;
+		for (i = 0; i < l; i++)
+		{
+			low = i - 1;
+			high = i;
+			while (low >= 0 && high < l && str[low] == str[high])
+			{
+				if (high - low + 1 > len){
+					start = low;
+					len = high - low + 1;
+				}
+				low--;
+				high++;
+			}
+
+			low = i - 1;
+			high = i + 1;
+			while (low >= 0 && high < l && str[low] == str[high]){
+				if (high - low + 1 > len){
+					start = low;
+					len = high - low + 1;
+				}
+				low--;
+				high++;
+			}
+		}
+
+		string ans = "";
+		for (i = start; i <= start + len - 1; i++)
+		{
+			ans = ans + str[i];
+		}
+		return ans;
+
+}
